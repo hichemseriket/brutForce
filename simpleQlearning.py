@@ -1,8 +1,7 @@
 import numpy as np
-import datetime
-import random
 from random import randint
-
+import random
+import datetime
 import gym
 import gym_minigrid
 import time
@@ -178,64 +177,6 @@ class BruteForcePolycubes():
         else:
             return 0
 
-
-
-    # @staticmethod
-    # def Test():
-    #
-    #     # Déclarer l'algorithme
-    #     monAlgoBruteForce = BruteForcePolycubes()
-    #
-    #     # Initialiser la seed
-    #     random.seed(0)
-    #
-    #     # Initialiser l'espace d'exploration
-    #     monAlgoBruteForce.CreateExplorationSpace([3, 7, 12])
-    #
-    #     # Déclarer la librairies de formes 3D à utiliser, ici trois formes sont utilisées mais il est possible d'en utiliser plus ou moins
-    #     shape1 = np.array([[0, 0, 0], [1, 0, 0], [2, 0, 0], [2, 0, 1], [2, 0, 2], [3, 0, 2]])
-    #     shape2 = np.array([[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 2, 1], [1, 2, 1]])
-    #     shape3 = np.array([[0, 0, 0], [0, -1, 0], [0, -2, 0], [-1, -1, 0], [-2, -1, 0], [-2, -2, 0], [-2, -2, 1]])
-    #     libraryShapes = [shape1, shape2, shape3]
-    #
-    #     # Initialiser la table de polycubes avec un polycube choisi au hasard parmi la bibliothèque de formes et fixer son index à
-    #     randomInit = random.randint(0, len(libraryShapes) - 1)
-    #     initPolycube = libraryShapes[randomInit]
-    #     indexToAdd = np.zeros(shape=len(libraryShapes[randomInit]))
-    #     monAlgoBruteForce.polycubesTable = np.concatenate((initPolycube, indexToAdd[:, None]), axis=1)
-    #     print("creation de la table ", monAlgoBruteForce.polycubesTable, "\n")
-    #
-    #     monAlgoBruteForce.AddPolycubeToPolycubesTable(libraryShapes[2])
-    #     print("ajout d'un polycube à la table, avant translation", monAlgoBruteForce.polycubesTable, "\n")
-    #
-    #     monAlgoBruteForce.TranslatePolycube(1, 2, 0, 2)
-    #     print("polycubesTable apres Translation du 2eme polycube avec 2,0,2", monAlgoBruteForce.polycubesTable, "\n")
-    #
-    #     # monAlgoBruteForce.RotatePolycube(1, 12)
-    #     # print(monAlgoBruteForce.polycubesTable, "\n")
-    #
-    #     monAlgoBruteForce.PivotPolycube(0, 12, 3)
-    #     print(
-    #         "polycubesTable apres pivot du polycube index 0 avec la rotation 12 (u, v, w = -v, u, w) selon le pivot 3",
-    #         monAlgoBruteForce.polycubesTable, "\n")
-    #
-    #     monAlgoBruteForce.TranslatePolycube(0, 0, -3, 2)
-    #     print(monAlgoBruteForce.polycubesTable, "\n")
-    #
-    #     monAlgoBruteForce.TranslatePolycube(0, 0, 2, 0)
-    #     monAlgoBruteForce.TranslatePolycube(1, 0, 2, 0)
-    #
-    #     print(monAlgoBruteForce.polycubesTable, "\n")
-    #
-    #     print("C1 : ", monAlgoBruteForce.CountVoxelsOut())
-    #     print("C2 : ", monAlgoBruteForce.CountVoxelsInCollision())
-    #     print("C3 : ", monAlgoBruteForce.CountVoxelsFilled())
-    #     print("C4 : ", monAlgoBruteForce.CountVoxelsNotFilled())
-    #     print("C5 : ", monAlgoBruteForce.CountPercentageSpaceFilled())
-    #
-    #     print(np.min(monAlgoBruteForce.explorationSpace, axis=0))
-    #     print(np.max(monAlgoBruteForce.explorationSpace, axis=0))
-
     def isDone(self):
         pass
 
@@ -243,127 +184,154 @@ class BruteForcePolycubes():
         pass
 
 
-# BruteForcePolycubes.Test()
-# class polycube and methode create polycube
-# class polycube and methode create polycube
-class Polycube:
-    def __init__(self, index, polycube):
-        self.index = index
-        self.polycube = polycube
-
-    # Fonction pour créer un polycube
-    def createPolycube(self, sizeVoxelsCube):
-        polycube = np.array(
-            np.meshgrid(np.arange(sizeVoxelsCube[0]), np.arange(sizeVoxelsCube[1]), np.arange(sizeVoxelsCube[2]),
-                        indexing='ij'))
-        polycube = np.transpose([polycube[0].flatten(), polycube[1].flatten(), polycube[2].flatten()])
-        return polycube
-
-    # reset function for the polycube
-    def resetPolycube(self):
-        self.polycubesTable = []
-        self.index = 0
-
-    def GetIndex(self):
-        return self.index
-
-    def GetPolycube(self):
-        return self.polycube
 
 
-# exemples of basic qlearning
-
-def state_to_key(obs=(0, 0, 0)):
-    return BruteForcePolycubes().AddPolycubeToPolycubesTable(obs)
 
 
-def update_Q(Q, s, sp, a, r, done):
-    if s not in Q:
-        Q[s] = np.array([0., 0., 0., 0.])
-    if sp not in Q:
-        Q[sp] = np.array([0., 0., 0., 0.])
-
-    ap = np.argmax(Q[sp])
-    if not done:
-        Q[s][a] = Q[s][a] + 0.01 * (r + 0.99 * Q[sp][ap] - Q[s][a])
-    else:
-        Q[s][a] = Q[s][a] + 0.01 * (r - Q[s][a])
 
 
-def create_state_if_not_exist(Q, s):
-    if s not in Q:
-        Q[s] = np.array([0., 0., 0., 0.])
 
-
-def main():
-    Q = {}
-    #instantiate the the class BruteForcePolycubes
+class EnvGrid(object):
+    """
+        docstring forEnvGrid.
+    """
     monAlgoBruteForce = BruteForcePolycubes()
 
-    # le tuto use env grid
-    # env = gym.make("MiniGrid-Empty-6x6-v0")
-    # ill use my env
-   # env = np.transpose([positionsCube[0].flatten(), positionsCube[1].flatten(), positionsCube[2].flatten()])
-   #  env = monPolycube.createPolycube(sizeVoxelsCube=[4, 4, 4])
-   #  env = monAlgoBruteForce.CreateExplorationSpace(sizeVoxelsCube=[4, 4, 4])
-   #  env = monAlgoBruteForce.explorationSpace
-    al = monAlgoBruteForce.CreateExplorationSpace([3, 7, 12])
-    env = al
-    print("env at the beginning: ", env)
-    print("taille env at the beginning: ", len(env))
-
-    eps = 0.01
-
-    for epoch in range(10):
-
-        s = monAlgoBruteForce.reset()
-        print("s au debut : ", s)
-        print("type of s : ", type(s))
-        s = state_to_key(s)
-        print("s apres conversion state_key : ", s)
-        done = False
-
-        while not done:
-
-            if np.random.rand() < eps:
-                a = np.random.randint(0, 4)
-                print("a debut du while: ", a)
-            else:
-                create_state_if_not_exist(Q, s)
-                a = np.argmax(Q[s])
+    def __init__(self):
+        super(EnvGrid, self).__init__()
 
 
-            sp, r, done, info = monAlgoBruteForce.PivotPolycube(a),monAlgoBruteForce.giveReward(),monAlgoBruteForce.isDone(),monAlgoBruteForce.giveInfo()
-            print("sp dans les statements longs : ", sp)
-            print("r dans les statements longs :  ", r)
-            print("done dans les statements longs : ", done)
-            print("info dans les statements longs : ", info)
-            sp = state_to_key(sp)
-            print("sp apres les statements longs : ", sp)
+        # self.grid = [
+        #     [0, 0, 1],
+        #     [0, -1, 0],
+        #     [0, 0, 0]
+        # ]
+        # self.grid = []
+        # self.grid = self.monAlgoBruteForce.CreateExplorationSpace([3, 7, 12])
+        self.explorationSpace = positionsCube = np.array(
+            np.meshgrid(np.arange(self.monAlgoBruteForce.sizeVoxelsCube[0]), np.arange(self.monAlgoBruteForce.sizeVoxelsCube[1]), np.arange(self.monAlgoBruteForce.sizeVoxelsCube[2]),
+                        indexing='ij'))
+        self.grid = np.transpose(
+            [positionsCube[0].flatten(), positionsCube[1].flatten(), positionsCube[2].flatten()])
 
-            update_Q(Q, s, sp, a, r, done)
+        # Starting position
+        # self.y = 2
+        # self.x = 0
+        shape1 = np.array([[0, 0, 0], [1, 0, 0], [2, 0, 0], [2, 0, 1], [2, 0, 2], [3, 0, 2]])
+        shape2 = np.array([[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 2, 1], [1, 2, 1]])
+        shape3 = np.array([[0, 0, 0], [0, -1, 0], [0, -2, 0], [-1, -1, 0], [-2, -1, 0], [-2, -2, 0], [-2, -2, 1]])
+        libraryShapes = [shape1, shape2, shape3]
 
-            s = sp
-            print("s apres update_Q : ", s)
-        print("eps", eps)
-        eps = max(0.1, eps * 0.99)
+        # Initialiser la table de polycubes avec un polycube choisi au hasard parmi la bibliothèque de formes et fixer son index à
+        randomInit = random.randint(0, len(libraryShapes) - 1)
+        initPolycube = libraryShapes[randomInit]
+        indexToAdd = np.zeros(shape=len(libraryShapes[randomInit]))
+        self.monAlgoBruteForce.polycubesTable = np.concatenate((initPolycube, indexToAdd[:, None]), axis=1)
+        print("creation de la table ", self.monAlgoBruteForce.polycubesTable, "\n")
 
-    for epoch in range(10):
-        s = monAlgoBruteForce.reset()
-        s = state_to_key(s)
-        done = False
+        # self.actions = [
+        #     [-1, 0],  # Up
+        #     [1, 0],  # Down
+        #     [0, -1],  # Left
+        #     [0, 1]  # Right
+        # ]
 
-        while not done:
-            create_state_if_not_exist(Q, s)
-            print("create_state_if_not_exist : ", s)
-            a = np.argmax(Q[s])
-            print("a np.argMax : ", a)
-            sp, r, done, info = monAlgoBruteForce.PivotPolycube(a),monAlgoBruteForce.giveReward(),monAlgoBruteForce.isDone(),monAlgoBruteForce.giveInfo()
-            sp = state_to_key(sp)
-            s = sp
-            time.sleep(0.1)
-        print("r", r)
+        # create liste of actions from monAlgoBruteForce using return of PivotPolycube()
+        self.actions = self.monAlgoBruteForce.PivotPolycube()
+        print("actions : ", self.actions, "\n")
+        # self.actions = [
+        # self.monAlgoBruteForce.PivotPolycube(self.monAlgoBruteForce.polycubesTable[i], self.actions[i]) for i in range(len(self.actions))]
+        # ]
 
+    # def reset(self):
+    #     """
+    #         Reset world
+    #     """
+    #     self.y = 2
+    #     self.x = 0
+    #     return (self.y*3+self.x+1)
 
-if __name__ == "__main__":
-    main()
+    def reset(self):
+        """
+            Reset world
+        """
+        self.monAlgoBruteForce.polycubesTable = np.array([])
+        self.monAlgoBruteForce.explorationSpace = np.array([])
+        self.monAlgoBruteForce.explorationSpace = self.monAlgoBruteForce.CreateExplorationSpace([0, 0, 0])
+    # def step(self, action):
+    #     """
+    #         Action: 0, 1, 2, 3
+    #     """
+    #     self.y = max(0, min(self.y + self.actions[action][0],2))
+    #     self.x = max(0, min(self.x + self.actions[action][1],2))
+    #
+    #     return (self.y*3+self.x+1) , self.grid[self.y][self.x]
+
+    def step(self, action):
+        """
+            Faut que je reflichir a comment assigné une étape a chaque action
+        """
+        # print("action : ", action, "\n")
+
+    def show(self):
+        """
+            Show the grid
+        """
+        print("---------------------")
+        y = 0
+        for line in self.grid:
+            x = 0
+            for pt in line:
+                print("%s\t" % (pt if y != self.y or x != self.x else "X"), end="")
+                x += 1
+            y += 1
+            print("")
+
+    def is_finished(self):
+        return self.grid[self.y][self.x] == 1
+
+def take_action(st, Q, eps):
+    # Take an action
+    if random.uniform(0, 1) < eps:
+        action = randint(0, 3)
+    else: # Or greedy action
+        action = np.argmax(Q[st])
+    return action
+
+if __name__ == '__main__':
+    env = EnvGrid()
+    st = env.reset()
+
+    Q = [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ]
+
+    for _ in range(100):
+        # Reset the game
+        st = env.reset()
+        while not env.is_finished():
+            #env.show()
+            #at = int(input("$>"))
+            at = take_action(st, Q, 0.4)
+
+            stp1, r = env.step(at)
+            #print("s", stp1)
+            #print("r", r)
+
+            # Update Q function
+            atp1 = take_action(stp1, Q, 0.0)
+            Q[st][at] = Q[st][at] + 0.1*(r + 0.9*Q[stp1][atp1] - Q[st][at])
+
+            st = stp1
+
+    for s in range(1, 10):
+        print(s, Q[s])

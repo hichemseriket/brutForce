@@ -178,64 +178,6 @@ class BruteForcePolycubes():
         else:
             return 0
 
-
-
-    # @staticmethod
-    # def Test():
-    #
-    #     # Déclarer l'algorithme
-    #     monAlgoBruteForce = BruteForcePolycubes()
-    #
-    #     # Initialiser la seed
-    #     random.seed(0)
-    #
-    #     # Initialiser l'espace d'exploration
-    #     monAlgoBruteForce.CreateExplorationSpace([3, 7, 12])
-    #
-    #     # Déclarer la librairies de formes 3D à utiliser, ici trois formes sont utilisées mais il est possible d'en utiliser plus ou moins
-    #     shape1 = np.array([[0, 0, 0], [1, 0, 0], [2, 0, 0], [2, 0, 1], [2, 0, 2], [3, 0, 2]])
-    #     shape2 = np.array([[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 2, 1], [1, 2, 1]])
-    #     shape3 = np.array([[0, 0, 0], [0, -1, 0], [0, -2, 0], [-1, -1, 0], [-2, -1, 0], [-2, -2, 0], [-2, -2, 1]])
-    #     libraryShapes = [shape1, shape2, shape3]
-    #
-    #     # Initialiser la table de polycubes avec un polycube choisi au hasard parmi la bibliothèque de formes et fixer son index à
-    #     randomInit = random.randint(0, len(libraryShapes) - 1)
-    #     initPolycube = libraryShapes[randomInit]
-    #     indexToAdd = np.zeros(shape=len(libraryShapes[randomInit]))
-    #     monAlgoBruteForce.polycubesTable = np.concatenate((initPolycube, indexToAdd[:, None]), axis=1)
-    #     print("creation de la table ", monAlgoBruteForce.polycubesTable, "\n")
-    #
-    #     monAlgoBruteForce.AddPolycubeToPolycubesTable(libraryShapes[2])
-    #     print("ajout d'un polycube à la table, avant translation", monAlgoBruteForce.polycubesTable, "\n")
-    #
-    #     monAlgoBruteForce.TranslatePolycube(1, 2, 0, 2)
-    #     print("polycubesTable apres Translation du 2eme polycube avec 2,0,2", monAlgoBruteForce.polycubesTable, "\n")
-    #
-    #     # monAlgoBruteForce.RotatePolycube(1, 12)
-    #     # print(monAlgoBruteForce.polycubesTable, "\n")
-    #
-    #     monAlgoBruteForce.PivotPolycube(0, 12, 3)
-    #     print(
-    #         "polycubesTable apres pivot du polycube index 0 avec la rotation 12 (u, v, w = -v, u, w) selon le pivot 3",
-    #         monAlgoBruteForce.polycubesTable, "\n")
-    #
-    #     monAlgoBruteForce.TranslatePolycube(0, 0, -3, 2)
-    #     print(monAlgoBruteForce.polycubesTable, "\n")
-    #
-    #     monAlgoBruteForce.TranslatePolycube(0, 0, 2, 0)
-    #     monAlgoBruteForce.TranslatePolycube(1, 0, 2, 0)
-    #
-    #     print(monAlgoBruteForce.polycubesTable, "\n")
-    #
-    #     print("C1 : ", monAlgoBruteForce.CountVoxelsOut())
-    #     print("C2 : ", monAlgoBruteForce.CountVoxelsInCollision())
-    #     print("C3 : ", monAlgoBruteForce.CountVoxelsFilled())
-    #     print("C4 : ", monAlgoBruteForce.CountVoxelsNotFilled())
-    #     print("C5 : ", monAlgoBruteForce.CountPercentageSpaceFilled())
-    #
-    #     print(np.min(monAlgoBruteForce.explorationSpace, axis=0))
-    #     print(np.max(monAlgoBruteForce.explorationSpace, axis=0))
-
     def isDone(self):
         pass
 
@@ -307,8 +249,8 @@ def main():
    #  env = monPolycube.createPolycube(sizeVoxelsCube=[4, 4, 4])
    #  env = monAlgoBruteForce.CreateExplorationSpace(sizeVoxelsCube=[4, 4, 4])
    #  env = monAlgoBruteForce.explorationSpace
-    al = monAlgoBruteForce.CreateExplorationSpace([3, 7, 12])
-    env = al
+    env = monAlgoBruteForce.CreateExplorationSpace([3, 7, 12])
+
     print("env at the beginning: ", env)
     print("taille env at the beginning: ", len(env))
 
